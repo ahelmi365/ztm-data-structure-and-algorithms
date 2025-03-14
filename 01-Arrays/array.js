@@ -8,18 +8,31 @@ class MyArray {
     return this.data[index];
   }
   push(newItem) {
-    if (!newItem && newItem !== "") {
-      return this.length;
-    }
     this.data[this.length] = newItem;
-    return ++this.length;
+    this.length++;
+    return this.length;
   }
 
   pop() {
     const lastItem = this.data[this.length - 1];
     delete this.data[this.length - 1];
-    --this.length;
+    this.length--;
     return lastItem;
+  }
+
+  delete(index) {
+    const targetItem = this.data[index];
+    this.#shiftItem(index);
+    return targetItem;
+  }
+
+  #shiftItem(index) {
+    const item = this.data[index];
+    for (let i = index; i < this.length - 1; i++) {
+      this.data[i] = this.data[i + 1];
+    }
+    delete this.data[this.length - 1];
+    this.length--;
   }
 
   unshiftV1(newItem) {
